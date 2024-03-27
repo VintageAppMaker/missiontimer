@@ -118,8 +118,6 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
     String minutesStr = makeStringMinutes();
     String secondsStr = makeStringSeconds();
 
-    final TextEditingController colorController = TextEditingController();
-
     return Scaffold(
       appBar: EmptyAppBar(),
       body: WaterEffect(
