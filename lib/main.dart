@@ -50,6 +50,8 @@ enum TimeLabel {
   final int min;
 }
 
+List<TimeLabel> lst = TimeLabel.values;
+
 class _PomodoroTimerState extends State<PomodoroTimer> {
   int _minutes = TimeLabel.five.min; // 일단 5분으로 초기화
   int _seconds = 0;
@@ -176,29 +178,28 @@ class _PomodoroTimerState extends State<PomodoroTimer> {
                   ],
                 ),
                 SizedBox(height: 50),
-                DropdownMenu<TimeLabel>(
-                  initialSelection: TimeLabel.five,
-                  controller: colorController,
-                  requestFocusOnTap: true,
-                  label: const Text('시간선택'),
-                  onSelected: (TimeLabel? time) {
+                DropdownButton(
+                  value: selectedTime,
+                  items: TimeLabel.values.map((e) {
+                    return DropdownMenuItem(
+                      child: Container(
+                          margin: EdgeInsets.all(10),
+                          child: Text("${e.min} 분")),
+                      value: e,
+                    );
+                  }).toList(),
+                  borderRadius: BorderRadius.circular(20),
+                  underline: SizedBox.shrink(),
+                  style: TextStyle(color: Colors.lightGreen),
+                  onChanged: (dynamic time) {
                     setState(() {
+                      print(time!.min.toString());
                       selectedTime = time;
                       _minutes = selectedTime!.min;
                       minutesStr = makeStringMinutes();
                       secondsStr = makeStringSeconds();
                     });
                   },
-                  dropdownMenuEntries: TimeLabel.values
-                      .map<DropdownMenuEntry<TimeLabel>>((TimeLabel color) {
-                    return DropdownMenuEntry<TimeLabel>(
-                      value: color,
-                      label: color.label,
-                      style: MenuItemButton.styleFrom(
-                        foregroundColor: Colors.grey,
-                      ),
-                    );
-                  }).toList(),
                 )
               ],
             ),
